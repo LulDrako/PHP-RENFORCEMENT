@@ -1,8 +1,17 @@
 <?php
-include_once("model/filmModel.php");
+include_once("model/veloModel.php");
 
-    public function getAccueilController()
+class filmController
+{
+    private $model;
+
+    public function __construct()
+    {
+        $this->model = new filmModel();
+    }
+}
+public function getAccueilController()
     {
         $lastVelo = $this->model->dernieraccueilModel();
-        include("view/accueil.php");
+        include("views/home.php");
     }
