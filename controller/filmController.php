@@ -12,10 +12,9 @@ class filmController
 
     public function getAccueilController()
     {
-        // Appelle le modèle pour récupérer les données
         $films = $this->model->dernieraccueilModel();
 
-        // Inclut la vue qui affichera les données
+        /*desdde*/ 
         include("views/home.php");
     }
 }
