@@ -1,16 +1,16 @@
 <?php
-include_once("model/filmModel.php");
+include_once("Bdd.php");
 
-class filmController
+class filmModel
 {
-    private $model;
+    private $bdd;
 
     public function __construct()
     {
-        $this->model = new filmModel();
+        $this->bdd = Bdd::connexion();
     }
 
-    public function getAccueilController()
+    public function dernieraccueilModel()
     {
         $films = $this->model->dernieraccueilModel();
 

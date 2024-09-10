@@ -1,5 +1,5 @@
 <?php
-include_once("Bdd.php");
+include_once("../model/Bdd.php");
 
 class filmModel
 {
@@ -16,6 +16,7 @@ class filmModel
         // Requête pour récupérer tous les films
         $query = "SELECT * FROM movie";
         $result = $this->bdd->query($query);
-        return $result->fetchAll(PDO::FETCH_ASSOC); // On récupère toutes les lignes
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+
