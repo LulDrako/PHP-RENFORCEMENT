@@ -1,21 +1,19 @@
 <?php
-include_once("model/filmModel.php");
+include_once("Bdd.php");
 
-class filmController
+class filmModel
 {
-    private $model;
+    private $bdd;
 
     public function __construct()
     {
-        $this->model = new filmModel();
+        $this->bdd = Bdd::connexion();
     }
 
-    public function getAccueilController()
+    public function dernieraccueilModel()
     {
-        // Appelle le modèle pour récupérer les données
-        $films = $this->model->dernieraccueilModel();
-
-        // Inclut la vue qui affichera les données
-        include("views/home.php");
+        $query = "SELECT * FROM movie";
+        $result = $this->bdd->query($query);
+        return $result->fetchAll(PDO::FETCH_ASSOC); // Changez fetch() en fetchAll()
     }
 }
