@@ -12,7 +12,10 @@ class filmController
 
     public function getAccueilController()
     {
-        $lastVelo = $this->model->dernieraccueilModel();
+        // Appelle le modèle pour récupérer les données
+        $films = $this->model->dernieraccueilModel();
+
+        // Inclut la vue qui affichera les données
         include("views/home.php");
     }
 }
