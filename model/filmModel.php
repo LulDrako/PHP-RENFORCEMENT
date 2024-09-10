@@ -1,5 +1,5 @@
 <?php
-include_once("Bdd.php");
+include_once("../model/Bdd.php");
 
 class filmModel
 {
@@ -9,10 +9,12 @@ class filmModel
     {
         $this->bdd = Bdd::connexion();
     }
-public function dernieraccueilModel()
+
+    public function dernieraccueilModel()
     {
         $query = "SELECT * FROM movie";
         $result = $this->bdd->query($query);
-        return $result->fetch(PDO::FETCH_ASSOC);
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+
