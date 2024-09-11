@@ -19,4 +19,3 @@ class FilmController
         include("views/Home.php"); // Assurez-vous que le chemin de la vue est correct
     }
 }
-?>
