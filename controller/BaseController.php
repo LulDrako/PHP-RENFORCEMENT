@@ -1,5 +1,5 @@
 <?php
-class BaseController
+ class BaseController
 {
     public function __construct()
     {
@@ -29,21 +29,19 @@ class BaseController
         session_destroy();
     }
 
-    // Méthode pour vérifier si l'utilisateur est connecté
     public function isAuthenticated()
     {
         return $this->sessionExists('user_id');
     }
 
-    // Méthode pour se connecter
     public function login($user_id)
     {
         $this->setSession('user_id', $user_id);
     }
 
-    // Méthode pour se déconnecter
     public function logout()
     {
         $this->destroySession();
     }
+
 }
