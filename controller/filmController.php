@@ -1,13 +1,13 @@
 <?php
 include_once("model/filmModel.php");
 
-class filmController
+class FilmController
 {
     private $model;
 
     public function __construct()
     {
-        $this->model = new filmModel();
+        $this->model = new filmModel(); // Assurez-vous que le nom de la classe du modèle correspond
     }
 
     public function getAccueilController()
@@ -16,6 +16,7 @@ class filmController
         $films = $this->model->dernieraccueilModel();
 
         // Inclut la vue qui affichera les données
-        include("views/Home.php");
+        include("views/Home.php"); // Assurez-vous que le chemin de la vue est correct
     }
 }
+?>

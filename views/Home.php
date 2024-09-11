@@ -1,7 +1,6 @@
 <?php
 // Assuming $films is your array of films
 
-
 // Check if a search query is submitted
 $searchQuery = !empty($_GET['search']) ? $_GET['search'] : '';
 
@@ -37,6 +36,7 @@ if (!empty($searchQuery)) {
                     <strong>Nom :</strong> <?= htmlspecialchars($film['name']); ?><br>
                     <strong>Durée :</strong> <?= htmlspecialchars($film['movie_time']); ?><br>
                     <strong>Thème :</strong> <?= htmlspecialchars($film['theme']); ?><br>
+                    <!-- Ajouter une image du film -->
                     <img src="<?= htmlspecialchars($film['poster']); ?>" alt="Poster du film" style="width: 150px;">
                 </li>
             <?php endforeach; ?>
