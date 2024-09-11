@@ -16,6 +16,6 @@ class filmController
         $films = $this->model->dernieraccueilModel();
 
         // Inclut la vue qui affichera les données
-        include("views/home.php");
+        include("views/Home.php");
     }
 }
