@@ -1,18 +1,21 @@
 <?php
 include_once("Bdd.php");
 
-class VeloModel
+class filmModel
 {
     private $bdd;
 
     public function __construct()
     {
+        // Connexion à la base de données via la classe Bdd
         $this->bdd = Bdd::connexion();
     }
-public function dernieraccueilModel()
+
+    public function dernieraccueilModel()
     {
+        // Requête pour récupérer tous les films
         $query = "SELECT * FROM movie";
         $result = $this->bdd->query($query);
-        return $result->fetch(PDO::FETCH_ASSOC);
+        return $result->fetchAll(PDO::FETCH_ASSOC); // On récupère toutes les lignes
     }
 }
