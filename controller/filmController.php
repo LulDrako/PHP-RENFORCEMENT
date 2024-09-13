@@ -22,4 +22,18 @@ class filmController extends BaseController
         $films = $this->model->dernieraccueilModel();
         include("../views/Home.php");
     }
+
+    public function likeMovieController($movie_id)
+    {
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+            $this->model->likeMovie($user_id, $movie_id);
+        } else {
+            echo "Vous devez être connecté pour aimer un film.";
+        }
+        header('Location: index.php?page=home');
+        exit();
+    }
+    
+
 }
