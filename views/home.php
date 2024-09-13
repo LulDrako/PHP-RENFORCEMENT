@@ -37,26 +37,4 @@ if (!empty($searchQuery)) {
                     <strong>Durée :</strong> <?= htmlspecialchars($film['movie_time']); ?><br>
                     <strong>Thème :</strong> <?= htmlspecialchars($film['theme']); ?><br>
                     <!-- Ajouter une image du film -->
-                    <img src="<?= htmlspecialchars($film['poster']); ?>" alt="Poster du film" style="width: 150px;"><br>
-
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <!-- Ajouter un bouton pour aimer le film -->
-                        <form method="POST" action="index.php?page=like">
-    <input type="hidden" name="movie_id" value="<?= htmlspecialchars($film['id_movie']); ?>">
-    <button type="submit">Aimer</button>
-</form>
-
-
-                    <?php else: ?>
-                        <p><a href="index.php?page=login">Connectez-vous</a> pour aimer ce film.</p>
-                    <?php endif; ?>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-        <a href="index.php?page=register" class="btn">register</a>
-        <a href="index.php?page=login" class="btn">login</a>
-    <?php else : ?>
-        <p>Aucun film trouvé.</p>
-    <?php endif; ?>
-</body>
-</html>
+                    <img src="<?= htmlspecialchars($film['poster']); ?>" alt="Poster du film" style="width: 150px;">
