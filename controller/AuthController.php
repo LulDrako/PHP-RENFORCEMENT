@@ -18,13 +18,15 @@ class AuthController extends BaseController
     {
         $user = $this->model->authenticate($username, $password);
         if ($user) {
-            $this->login($user['id']);
+            $this->setSession('user_id', $user['id']);
+            $this->setSession('username', $user['username']); // Assurez-vous que cette ligne est correcte
             header('Location: index.php?page=home');
+            exit(); // Ajoutez exit() après redirection pour éviter d'exécuter le reste du code
         } else {
             echo "Identifiants incorrects.";
         }
     }
-
+    
     public function registerController($email, $username, $password)
     {
         // Validation de l'email
