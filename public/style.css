@@ -1,0 +1,77 @@
+/* Style global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  body {
+    background-color: #121212;
+    color: #ffffff;
+    line-height: 1.6;
+  }
+  
+  /* Barre de navigation */
+  nav {
+    background-color: #1f1f1f;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav h1 {
+    color: #e50914; /* Rouge Netflix */
+    font-size: 24px;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  nav ul li {
+    margin-left: 20px;
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+  nav ul li a:hover {
+    color: #e50914;
+  }
+  
+  /* Contenu principal */
+  .content {
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .content h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  
+  .content p {
+    font-size: 18px;
+  }
+  
+  /* Pied de page */
+  footer {
+    background-color: #1f1f1f;
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+  }
+  
+  header {
+    background-color: #ff0000;
+    padding: 20px;
+    text-align: center;
+    color: #ff0000;
+  }
