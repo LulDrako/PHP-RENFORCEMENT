@@ -1,38 +1,49 @@
 <?php
-$page = isset($_GET['page']) ? $_GET['page'] : '';
+include_once("controller/FilmController.php");
+include_once("controller/AuthController.php");
+
+$film = new FilmController();
+$auth = new AuthController();
+
+$page = isset($_GET['page']) ? $_GET['page'] : 'home';  // Par défaut, la page d'accueil
 
 switch ($page) {
     case 'home':
-        include_once('filmController.php');
-        $film = new filmController();
+        // Appeler la méthode qui affiche la page d'accueil sans redirection
         $film->getAccueilController();
         break;
+
     case 'login':
-        include_once('AuthController.php');
-        $auth = new AuthController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $auth->loginController($_POST['username'], $_POST['password']);
         } else {
-            include('views/login.php'); // Affiche le formulaire de connexion
+            include('views/login.php');
         }
         break;
+
     case 'register':
-        include_once('AuthController.php');
-        $auth = new AuthController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $auth->registerController($_POST['username'], $_POST['password']);
         } else {
-            include('views/register.php'); // Affiche le formulaire d'inscription
+            include('views/register.php');
         }
         break;
+
+    case 'film':
+        if (isset($_GET['id'])) {
+            $film->afficherFilm($_GET['id']);  // Appeler la méthode pour afficher les détails d'un film
+        } else {
+            echo "Aucun film spécifié.";
+        }
+        break;
+
     case 'logout':
-        include_once('AuthController.php');
-        $auth = new AuthController();
         $auth->logoutController();
         break;
+
     default:
-        include_once('filmController.php');
-        $film = new filmController();
+        // Par défaut, affiche la page d'accueil
         $film->getAccueilController();
         break;
 }
+?>

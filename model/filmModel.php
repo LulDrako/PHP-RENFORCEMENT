@@ -1,21 +1,24 @@
 <?php
-include_once("Bdd.php");
+class FilmModel {
+    private $db;
 
-class filmModel
-{
-    private $bdd;
-
-    public function __construct()
-    {
-        // Connexion à la base de données via la classe Bdd
-        $this->bdd = Bdd::connexion();
+    public function __construct() {
+        $this->db = Bdd::connexion(); // Connexion à la base de données
     }
 
-    public function dernieraccueilModel()
-    {
-        // Requête pour récupérer tous les films
-        $query = "SELECT * FROM movie";
-        $result = $this->bdd->query($query);
-        return $result->fetchAll(PDO::FETCH_ASSOC); // On récupère toutes les lignes
+    // Récupérer les films pour la page d'accueil (les plus récents)
+    public function dernieraccueilModel() {
+        $query = "SELECT * FROM movie ORDER BY release_date DESC LIMIT 10";
+        $stmt = $this->db->query($query);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Récupérer un film spécifique par son ID
+    public function getFilmById($id) {
+        $query = "SELECT * FROM movie WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

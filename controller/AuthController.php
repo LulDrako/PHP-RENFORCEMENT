@@ -13,15 +13,17 @@ class AuthController extends BaseController
     }
 
     public function loginController($username, $password)
-    {
-        $user = $this->model->authenticate($username, $password);
-        if ($user) {
-            $this->login($user['id']);
-            header('Location: index.php?page=home'); // Redirection après connexion
-        } else {
-            echo "Identifiants incorrects.";
-        }
+{
+    $user = $this->model->authenticate($username, $password);
+    if ($user) {
+        $this->login($user['id']);
+        header('Location: index.php?page=home'); // Redirection vers la page d'accueil après connexion
+        exit(); // Arrêter le script après redirection
+    } else {
+        echo "Identifiants incorrects.";
     }
+}
+
 
     public function registerController($username, $password)
     {

@@ -1,22 +1,33 @@
 <?php
+include_once("BaseController.php");
 include_once("model/filmModel.php");
 
-class FilmController
+class FilmController extends BaseController
 {
     private $model;
 
     public function __construct()
     {
-        $this->model = new filmModel(); // Assurez-vous que le nom de la classe du modèle correspond
+        parent::__construct();
+        $this->model = new filmModel();
     }
 
+    // Afficher la page d'accueil
     public function getAccueilController()
     {
-        // Appelle le modèle pour récupérer les données
+        // Récupérer les films pour la page d'accueil
         $films = $this->model->dernieraccueilModel();
+        include('views/Home.php');
+    }
 
-        // Inclut la vue qui affichera les données
-        include("views/Home.php"); // Assurez-vous que le chemin de la vue est correct
+    // Afficher un film spécifique par son ID
+    public function afficherFilm($id)
+    {
+        $film = $this->model->getFilmById($id);
+        if ($film) {
+            include('views/film.php'); // Page vue pour afficher les détails du film
+        } else {
+            echo "Film non trouvé.";
+        }
     }
 }
-?>
