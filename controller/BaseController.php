@@ -46,9 +46,4 @@ class BaseController
     {
         $this->destroySession();
     }
-    public function getUsername()
-{
-    return $this->getSession('username');
-}
-
 }
