@@ -8,17 +8,8 @@ class Bdd {
 
     public static function connexion()
     {
-        // Charger les variables d'environnement à partir du fichier .env
-        $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-        $dotenv->load();
-
         try {
-            // Connexion à la base de données
-            $bdd = new PDO(
-                "mysql:host=" . $_ENV['DB_HOST'] . ";port=" . $_ENV['DB_PORT'] . ";dbname=" . $_ENV['DB_NAME'],
-                $_ENV['DB_USER'],
-                $_ENV['DB_PASS']
-            );
+            $bdd= new PDO("mysql:host=localhost;port=3306;dbname=film","","");
             return $bdd;
 
         } catch (Exception $e) {
