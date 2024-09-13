@@ -12,39 +12,30 @@ class AuthController extends BaseController
         $this->model = new UserModel();
     }
 
+ 
+
     public function loginController($username, $password)
     {
         $user = $this->model->authenticate($username, $password);
         if ($user) {
             $this->setSession('user_id', $user['id']);
-            $this->setSession('username', $user['username']);
-            
-            // Redirection après connexion
+            $this->setSession('username', $user['username']); // Assurez-vous que cette ligne est correcte
             header('Location: index.php?page=home');
-            exit();
+            exit(); // Ajoutez exit() après redirection pour éviter d'exécuter le reste du code
         } else {
-            header('Location: index.php?page=register');
-            exit();
+            echo "Identifiants incorrects.";
         }
-    }
-    
-    public function likeMovieController($movie_id)
-    {
-        if (isset($_SESSION['user_id'])) {
-            $user_id = $_SESSION['user_id'];
-            $this->model->likeMovie($user_id, $movie_id);
-        }
-        header('Location: index.php?page=home');
-        exit();
     }
     
     public function registerController($email, $username, $password)
     {
+        // Validation de l'email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo "Email invalide.";
-            return;
+            return; // Stoppe l'exécution si l'email est invalide
         }
 
+        // Tentative d'inscription de l'utilisateur
         if ($this->model->register($email, $username, $password)) {
             echo "Inscription réussie. Vous pouvez maintenant vous connecter.";
         } else {
@@ -58,4 +49,3 @@ class AuthController extends BaseController
         header('Location: index.php?page=home');
     }
 }
-?>
