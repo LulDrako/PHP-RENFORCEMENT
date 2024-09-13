@@ -37,4 +37,18 @@ if (!empty($searchQuery)) {
                     <strong>Durée :</strong> <?= htmlspecialchars($film['movie_time']); ?><br>
                     <strong>Thème :</strong> <?= htmlspecialchars($film['theme']); ?><br>
                     <!-- Ajouter une image du film -->
+<<<<<<< HEAD
                     <img src="<?= htmlspecialchars($film['poster']); ?>" alt="Poster du film" style="width: 150px;">
+=======
+                    <img src="<?= htmlspecialchars($film['poster']); ?>" alt="Poster du film" style="width: 150px;">
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <a href="index.php?page=register" class="btn">register</a>
+        <a href="index.php?page=login" class="btn">login</a>
+    <?php else : ?>
+        <p>Aucun film trouvé.</p>
+    <?php endif; ?>
+</body>
+</html>
+>>>>>>> parent of b4f528c (likes)
