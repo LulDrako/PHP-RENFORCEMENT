@@ -6,11 +6,11 @@ include 'header.php';
 $filmId = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
 if ($filmId) {
-    // Inclure le contrôleur pour gérer les films
-    include_once('filmController.php');
+    // Inclure le contrôleur
+    include_once('controller/FilmController.php');
     $filmController = new filmController();
     
-    // Récupérer les informations du film via son ID
+    // Récupérer les informations du film
     $film = $filmController->getFilmById($filmId);
 
     if ($film) {
@@ -34,11 +34,12 @@ if ($filmId) {
             echo "<p>Résumé non disponible.</p>";
         }
 
-        // Ajouter un bouton pour enregistrer le film pour les utilisateurs connectés
+        // Vérifier si l'utilisateur est connecté
         if (isset($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
             $movieId = $film['id'];
 
+            // Formulaire pour enregistrer le film
             echo "<form method='POST' action='index.php?page=save_movie'>";
             echo "<input type='hidden' name='movie_id' value='" . $movieId . "'>";
             echo "<button type='submit'>Enregistrer ce film</button>";
