@@ -13,8 +13,6 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php if (isset($_SESSION['user_id'])): ?>
                 <span>Bienvenue, <?= htmlspecialchars($_SESSION['username']) ?> !</span>
                 <a href="index.php?page=logout">Déconnexion</a>
-            <?php else: ?>
-                <a href="index.php?page=login">Connexion</a>
             <?php endif; ?>
         </div>
     </nav>

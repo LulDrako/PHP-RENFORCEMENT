@@ -20,7 +20,7 @@ switch ($page) {
                 echo "Données manquantes pour la connexion.";
             }
         } else {
-            include('../views/login.php');
+            include(__DIR__ . '/../views/login.php');
         }
         break;
 
@@ -35,7 +35,7 @@ switch ($page) {
                 echo "Données manquantes pour l'inscription.";
             }
         } else {
-            include('../views/register.php');
+            include(__DIR__ .'/../views/register.php');
         }
         break;
 
@@ -46,7 +46,7 @@ switch ($page) {
                 $movie_id = $_POST['movie_id'];
                 $auth->likeMovieController($movie_id);
             }
-            break;
+            break;        
         
 
     case 'logout':

@@ -1,6 +1,6 @@
 <?php
 include_once("BaseController.php");
-include_once("../model/UserModel.php");
+include_once(__DIR__ . '/../model/UserModel.php');
 
 class AuthController extends BaseController
 {
@@ -29,14 +29,21 @@ class AuthController extends BaseController
     }
     
     public function likeMovieController($movie_id)
-    {
-        if (isset($_SESSION['user_id'])) {
-            $user_id = $_SESSION['user_id'];
-            $this->model->likeMovie($user_id, $movie_id);
-        }
-        header('Location: index.php?page=home');
-        exit();
+{
+    // Vérifier si l'utilisateur est connecté
+    if (!isset($_SESSION['user_id'])) {
+        echo "Vous devez vous connecter pour aimer ce film.";
+        return;
     }
+
+    // Récupérer l'ID de l'utilisateur à partir de la session
+    $user_id = $_SESSION['user_id'];
+
+    // Ajouter le like dans la base de données via UserModel
+    $this->model->likeMovie($user_id, $movie_id);
+}
+
+
     
     public function registerController($email, $username, $password)
     {
