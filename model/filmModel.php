@@ -16,24 +16,25 @@ class filmModel
         // Requête pour récupérer tous les films avec les thèmes associés
         $query = "
             SELECT
-                movie.id_movie,
-                movie.name,
+                movie.id_film,  -- Correction ici, id_movie -> id_film
+                movie.nom AS name,  -- Correction ici, name -> nom
                 movie.movie_time,
                 movie.poster,
                 GROUP_CONCAT(Theme.Nom SEPARATOR ', ') AS theme
             FROM
                 movie
             LEFT JOIN
-                posseder ON movie.id_movie = posseder.id_movie
+                posseder ON movie.id_film = posseder.id_film  -- Correction ici, id_movie -> id_film
             LEFT JOIN
                 Theme ON posseder.id_theme = Theme.id_theme
             GROUP BY
-                movie.id_movie
+                movie.id_film  -- Correction ici, id_movie -> id_film
         ";
-
+    
         $result = $this->bdd->query($query);
         return $result->fetchAll(PDO::FETCH_ASSOC); // On récupère toutes les lignes
     }
+    
 
     public function likeMovie($user_id, $movie_id)
     {
