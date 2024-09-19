@@ -10,7 +10,7 @@
         <h1>Liste des films</h1>
         <!-- Search bar -->
         <form method="GET" action="">
-            <input type="text" name="search" placeholder="Chercher par nom..." value="<?= htmlspecialchars($searchQuery) ?>">
+            <input type="text" name="search" placeholder="Chercher par nom..." value="<?= htmlspecialchars($searchQuery ?? '') ?>">
             <button type="submit">Rechercher</button>
         </form>
     </header>
@@ -26,10 +26,8 @@
                     <img src="<?= htmlspecialchars($film['poster']); ?>" alt="Poster du film" style="width: 150px;"><br>
 
                     <!-- Formulaire pour ajouter un like -->
-                    <form method="POST" action="index.php?page=like">
-                        <input type="hidden" name="movie_id" value="<?= htmlspecialchars($film['id_film']); ?>">
-                        <button type="submit">Like</button>
-                    </form>
+                    <a href="../controller/filmController.php=<?= $film['id_film']; ?>&id_user=<?= $_SESSION['id_user']; ?>">Like</a>
+
                 </li>
             <?php endforeach; ?>
         </ul>

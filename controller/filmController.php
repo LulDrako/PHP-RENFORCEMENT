@@ -7,16 +7,27 @@ class FilmController
 
     public function __construct()
     {
-        $this->model = new filmModel(); // Assurez-vous que le nom de la classe du modèle correspond
+        $this->model = new filmModel(); // Utiliser la classe correcte
     }
 
     public function getAccueilController()
     {
-        // Appelle le modèle pour récupérer les données
-        $films = $this->model->dernieraccueilModel();
-
+        // Récupérer la requête de recherche si elle existe
+        $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
+    
+        // Appelle le modèle pour récupérer les données, avec la recherche si présente
+        $films = $this->model->dernieraccueilModel($searchQuery);
+    
         // Inclut la vue qui affichera les données
-        include("views/Home.php"); // Assurez-vous que le chemin de la vue est correct
+        include("views/Home.php");
+    }    
+
+    public function likeFilm($id_film, $id_user) {
+        // Utiliser le modèle déjà instancié
+        $this->model->addLike($id_film, $id_user);
+        
+        // Rediriger vers la page précédente après avoir liké
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 }
 ?>
