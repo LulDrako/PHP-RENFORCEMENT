@@ -17,6 +17,7 @@ class UserModel
         $stmt = $this->bdd->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':password', $password);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -28,6 +29,7 @@ class UserModel
         $stmt = $this->bdd->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password);
         $stmt->bindParam(':password', $password);
         return $stmt->execute();
     }

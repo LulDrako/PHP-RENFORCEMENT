@@ -16,19 +16,19 @@ class filmModel
         // Requête pour récupérer tous les films avec les thèmes associés
         $query = "
             SELECT
-                movie.id_film,
-                movie.nom,
-                movie.movie_Time,
+                movie.id_movie,
+                movie.name,
+                movie.movie_time,
                 movie.poster,
-                GROUP_CONCAT(theme.Nom SEPARATOR ', ') AS theme
+                GROUP_CONCAT(Theme.Nom SEPARATOR ', ') AS theme
             FROM
                 movie
             LEFT JOIN
-                posseder ON movie.id_film = posseder.id_film
+                posseder ON movie.id_movie = posseder.id_movie
             LEFT JOIN
-                theme ON posseder.id_theme = theme.id_theme
+                Theme ON posseder.id_theme = Theme.id_theme
             GROUP BY
-                movie.id_film
+                movie.id_movie
         ";
 
         $result = $this->bdd->query($query);
@@ -38,25 +38,20 @@ class filmModel
     public function likeMovie($user_id, $movie_id)
     {
         try {
-            $query = "INSERT INTO liker (id_film, id_user) VALUES (:movie_id, :user_id)";
+            $query = "INSERT INTO liker (id_users, id_movie) VALUES (:user_id, :movie_id)";
             $stmt = $this->bdd->prepare($query);
             $stmt->bindParam(':user_id', $user_id);
             $stmt->bindParam(':movie_id', $movie_id);
-            $stmt->execute();
+    
+            if ($stmt->execute()) {
+                echo "Film aimé avec succès.";
+            } else {
+                echo "Erreur lors de l'ajout du film dans les likes.";
+            }
         } catch (PDOException $e) {
             echo "Erreur PDO : " . $e->getMessage();
         }
     }
     
-    public function getLikedMovies($user_id)
-    {
-        $query = "SELECT movie.* FROM liker JOIN movie ON liker.id_film = movie.id_film WHERE liker.id_user = :user_id";
-        $stmt = $this->bdd->prepare($query);
-        $stmt->bindParam(':user_id', $user_id);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
-
 }
 ?>

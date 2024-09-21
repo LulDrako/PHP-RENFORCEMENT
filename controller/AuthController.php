@@ -20,7 +20,12 @@ class AuthController extends BaseController
             $this->setSession('username', $user['username']);
             
             // Redirection après connexion
+            $this->setSession('user_id', $user['id']);
+            $this->setSession('username', $user['username']);
+            
+            // Redirection après connexion
             header('Location: index.php?page=home');
+            exit();
             exit();
         } else {
             header('Location: index.php?page=register');
@@ -73,4 +78,5 @@ class AuthController extends BaseController
         header('Location: index.php?page=home');
     }
 }
+?>
 ?>
