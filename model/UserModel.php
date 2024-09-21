@@ -17,6 +17,7 @@ class UserModel
         $stmt = $this->bdd->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':password', $password);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -29,45 +30,53 @@ class UserModel
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':password', $password);
         return $stmt->execute();
     }
 
     // Enregistrement d'un film liké par l'utilisateur
-    public function likeMovie($movie_id) {
-        // Vérifier si l'utilisateur est connecté
-        if (!isset($_SESSION['user_id'])) {
-            echo "Vous devez vous connecter pour aimer ce film.";
-            return;
-        }
-    
-        // Récupérer l'ID de l'utilisateur à partir de la session
-        $user_id = $_SESSION['user_id'];
-    
-        // Vérifier si le film existe
-        $query = "SELECT id_film FROM movie WHERE id_film = :movie_id";
+    public function likeMovie($user_id, $movie_id)
+{
+    try {
+        $query = "INSERT INTO liker (id_film, id_user) VALUES (:movie_id, :user_id)";
         $stmt = $this->bdd->prepare($query);
-        $stmt->bindParam(':movie_id', $movie_id);
-        $stmt->execute();
-        
-        // Afficher le nombre de résultats trouvés pour débogage
-        $num_rows = $stmt->rowCount();
-        echo "Nombre de films trouvés : " . $num_rows;
-        
-        if ($num_rows == 0) {
-            echo "Le film spécifié n'existe pas.";
-            return;
-        }
-    
-        // Préparer la requête pour insérer un like dans la table Liker
-        $query = "INSERT INTO Liker (id_film, id_user) VALUES (:movie_id, :user_id)";
-        $stmt = $this->bdd->prepare($query);
-        $stmt->bindParam(':movie_id', $movie_id);
         $stmt->bindParam(':user_id', $user_id);
-    
+        $stmt->bindParam(':movie_id', $movie_id);
+
         if ($stmt->execute()) {
             echo "Film aimé avec succès.";
         } else {
             echo "Erreur lors de l'ajout du film dans les likes.";
         }
+    } catch (PDOException $e) {
+        echo "Erreur PDO : " . $e->getMessage();
     }
-}    
+}
+
+    public function getLikedMovies($user_id)
+{
+    $query = "
+        SELECT movie.id_film, movie.nom, movie.movie_Time, movie.poster
+        FROM liker
+        JOIN movie ON liker.id_film = movie.id_film
+        WHERE liker.id_user = :user_id
+    ";
+    $stmt = $this->bdd->prepare($query);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function emailExists($email)
+{
+    $query = "SELECT COUNT(*) FROM Utilisateur WHERE email = :email";
+    $stmt = $this->bdd->prepare($query);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    return $stmt->fetchColumn() > 0;
+}
+
+
+}
+
+?>

@@ -42,27 +42,21 @@ class filmModel
     // Ajout d'un "like" pour un film par un utilisateur
     public function addLike($id_film, $id_user)
     {
-        // Vérification si l'utilisateur a déjà liké ce film
-        $checkLike = $this->bdd->prepare('SELECT * FROM Liker WHERE id_film = :id_film AND id_user = :id_user');
-        $checkLike->execute([
-            'id_film' => $id_film,
-            'id_user' => $id_user
-        ]);
-
-        // Si l'utilisateur n'a pas encore liké, on insère un nouveau like
-        if ($checkLike->rowCount() == 0) {
-            $insertLike = $this->bdd->prepare('INSERT INTO Liker (id_film, id_user) VALUES (:id_film, :id_user)');
-            $insertLike->execute([
-                'id_film' => $id_film,
-                'id_user' => $id_user
-            ]);
-
-            // Retourne "true" si le like a bien été inséré
-            return true;
+        try {
+            $query = "INSERT INTO liker (id_users, id_movie) VALUES (:user_id, :movie_id)";
+            $stmt = $this->bdd->prepare($query);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':movie_id', $movie_id);
+    
+            if ($stmt->execute()) {
+                echo "Film aimé avec succès.";
+            } else {
+                echo "Erreur lors de l'ajout du film dans les likes.";
+            }
+        } catch (PDOException $e) {
+            echo "Erreur PDO : " . $e->getMessage();
         }
-
-        // Si le film est déjà liké, retourner "false"
-        return false;
     }
+    
 }
 ?>
