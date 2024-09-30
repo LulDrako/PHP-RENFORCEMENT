@@ -1,8 +1,11 @@
 <?php
 $page = isset($_GET['page']) ? $_GET['page'] : '';
 
+// Route en fonction de la page demandée
 switch ($page) {
     case 'home':
+        include_once(__DIR__ . "/filmController.php");
+        $film = new FilmController();
         include_once(__DIR__ . "/filmController.php");
         $film = new FilmController();
         $film->getAccueilController();
@@ -12,6 +15,11 @@ switch ($page) {
         include_once(__DIR__ . '/AuthController.php');
         $auth = new AuthController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['username']) && isset($_POST['password'])) {
+                $auth->loginController($_POST['username'], $_POST['password']);
+            } else {
+                echo "Données manquantes pour la connexion.";
+            }
             if (isset($_POST['username']) && isset($_POST['password'])) {
                 $auth->loginController($_POST['username'], $_POST['password']);
             } else {
@@ -31,7 +39,22 @@ switch ($page) {
             } else {
                 echo "Données manquantes pour l'inscription.";
             }
+            if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password'])) {
+                $auth->registerController($_POST['email'], $_POST['username'], $_POST['password']);
+            } else {
+                echo "Données manquantes pour l'inscription.";
+            }
         } else {
+            include('../views/register.php');
+        }
+        break;
+
+    case 'like':
+        include_once(__DIR__ . '/AuthController.php');
+        $auth = new AuthController();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['movie_id'])) {
+            $movie_id = $_POST['movie_id'];
+            $auth->likeMovieController($movie_id);
             include('../views/register.php');
         }
         break;
@@ -51,16 +74,27 @@ switch ($page) {
         $film->getLikedMoviesController();
         break;
 
+
+    case 'likedMovies':
+        include_once(__DIR__ . '/filmController.php');
+        $film = new FilmController();
+        $film->getLikedMoviesController();
+        break;
+
     case 'logout':
         include_once(__DIR__ . '/AuthController.php');
         $auth = new AuthController();
         $auth->logoutController();
         break;
 
+
     default:
+        include_once(__DIR__ . '/filmController.php');
+        $film = new FilmController();
         include_once(__DIR__ . '/filmController.php');
         $film = new FilmController();
         $film->getAccueilController();
         break;
 }
+?>
 ?>
