@@ -12,45 +12,60 @@ class AuthController extends BaseController
         $this->model = new UserModel();
     }
 
- 
-
     public function loginController($username, $password)
     {
         $user = $this->model->authenticate($username, $password);
         if ($user) {
-<<<<<<< HEAD
-            $this->login($user['id']);
-            header('Location: index.php?page=home');
-=======
             $this->setSession('user_id', $user['id']);
-            $this->setSession('username', $user['username']); // Assurez-vous que cette ligne est correcte
+            $this->setSession('username', $user['username']);
+            
+            // Redirection après connexion
             header('Location: index.php?page=home');
-            exit(); // Ajoutez exit() après redirection pour éviter d'exécuter le reste du code
->>>>>>> parent of b4f528c (likes)
+            exit();
         } else {
-            echo "Identifiants incorrects.";
+            header('Location: index.php?page=register');
+            exit();
         }
     }
-<<<<<<< HEAD
-
-=======
+    public function likeMovieController($movie_id)
+    {
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+            if ($this->model->likeMovie($user_id, $movie_id)) {
+                // Optionnel : vous pourriez vouloir afficher un message ici
+                $_SESSION['message'] = "Film aimé avec succès.";
+            } else {
+                $_SESSION['message'] = "Erreur lors de l'ajout du film dans les likes.";
+            }
+        } else {
+            $_SESSION['message'] = "Vous devez être connecté pour aimer un film.";
+        }
+        header('Location: index.php?page=home');
+        exit();
+    }
     
->>>>>>> parent of b4f528c (likes)
+    
+    
     public function registerController($email, $username, $password)
     {
-        // Validation de l'email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo "Email invalide.";
-            return; // Stoppe l'exécution si l'email est invalide
+            return;
         }
-
-        // Tentative d'inscription de l'utilisateur
+    
+        // Vérifie si l'email existe déjà
+        if ($this->model->emailExists($email)) {
+            echo "Cet email est déjà utilisé.";
+            return;
+        }
+    
         if ($this->model->register($email, $username, $password)) {
             echo "Inscription réussie. Vous pouvez maintenant vous connecter.";
         } else {
             echo "Erreur lors de l'inscription.";
         }
     }
+    
 
     public function logoutController()
     {
@@ -58,3 +73,4 @@ class AuthController extends BaseController
         header('Location: index.php?page=home');
     }
 }
+?>
